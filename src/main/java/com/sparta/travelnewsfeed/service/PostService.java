@@ -44,4 +44,10 @@ public class PostService {
         post.update(postUpdateRequestDto);
         return new PostReadResponseDto(post);
     }
+
+    @Transactional
+    public void delete(Long postId) {
+        postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
+        postRepository.deleteById(postId);
+    }
 }
