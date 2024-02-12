@@ -2,12 +2,12 @@ package com.sparta.travelnewsfeed.controller;
 
 import com.sparta.travelnewsfeed.dto.request.PostCreateRequestDto;
 import com.sparta.travelnewsfeed.dto.response.PostCreateResponseDto;
+import com.sparta.travelnewsfeed.dto.response.PostReadResponseDto;
 import com.sparta.travelnewsfeed.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,4 +21,8 @@ public class PostController {
         return postService.createPost(postCreateRequestDto);
     }
 
+    @GetMapping
+    public List<PostReadResponseDto> readAll(){
+        return postService.readAll();
+    }
 }
