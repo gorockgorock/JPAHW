@@ -2,6 +2,7 @@ package com.sparta.travelnewsfeed.entity;
 
 import com.sparta.travelnewsfeed.common.enumeration.Category;
 import com.sparta.travelnewsfeed.dto.request.PostCreateRequestDto;
+import com.sparta.travelnewsfeed.dto.request.PostUpdateRequestDto;
 import com.sparta.travelnewsfeed.entity.common.DateTime;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -32,5 +33,11 @@ public class Post extends DateTime {
         this.title = postCreateRequestDto.getTitle();
         this.content = postCreateRequestDto.getContent();
         this.category = postCreateRequestDto.getCategory();
+    }
+
+    public void update(PostUpdateRequestDto postUpdateRequestDto) {
+        this.title = postUpdateRequestDto.getTitle();
+        this.content = postUpdateRequestDto.getContent();
+        this.category = postUpdateRequestDto.getCategory();
     }
 }

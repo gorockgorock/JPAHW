@@ -1,6 +1,7 @@
 package com.sparta.travelnewsfeed.service;
 
 import com.sparta.travelnewsfeed.dto.request.PostCreateRequestDto;
+import com.sparta.travelnewsfeed.dto.request.PostUpdateRequestDto;
 import com.sparta.travelnewsfeed.dto.response.PostCreateResponseDto;
 import com.sparta.travelnewsfeed.dto.response.PostReadResponseDto;
 import com.sparta.travelnewsfeed.entity.Post;
@@ -34,6 +35,13 @@ public class PostService {
 
     public PostReadResponseDto readDetail(Long postId) throws NoSuchElementException {
         Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
+        return new PostReadResponseDto(post);
+    }
+
+    @Transactional
+    public PostReadResponseDto update(Long postId, PostUpdateRequestDto postUpdateRequestDto) {
+        Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
+        post.update(postUpdateRequestDto);
         return new PostReadResponseDto(post);
     }
 }

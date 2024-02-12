@@ -1,6 +1,7 @@
 package com.sparta.travelnewsfeed.controller;
 
 import com.sparta.travelnewsfeed.dto.request.PostCreateRequestDto;
+import com.sparta.travelnewsfeed.dto.request.PostUpdateRequestDto;
 import com.sparta.travelnewsfeed.dto.response.PostCreateResponseDto;
 import com.sparta.travelnewsfeed.dto.response.PostReadResponseDto;
 import com.sparta.travelnewsfeed.service.PostService;
@@ -30,4 +31,10 @@ public class PostController {
     public PostReadResponseDto readDetail(@PathVariable Long postId){
         return postService.readDetail(postId);
     }
+
+    @PutMapping("/{postId}")
+    public PostReadResponseDto update(@PathVariable Long postId, @RequestBody PostUpdateRequestDto postUpdateRequestDto){
+        return postService.update(postId, postUpdateRequestDto);
+    }
+
 }
