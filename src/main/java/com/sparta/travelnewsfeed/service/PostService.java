@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,5 +30,10 @@ public class PostService {
         List<PostReadResponseDto> postListToDto = postList.stream()
                 .map(m -> new PostReadResponseDto(m)).collect(Collectors.toList());
         return postListToDto;
+    }
+
+    public PostReadResponseDto readDetail(Long postId) throws NoSuchElementException {
+        Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
+        return new PostReadResponseDto(post);
     }
 }

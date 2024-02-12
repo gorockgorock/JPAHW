@@ -25,4 +25,9 @@ public class PostController {
     public List<PostReadResponseDto> readAll(){
         return postService.readAll();
     }
+
+    @GetMapping("/{postId}")
+    public PostReadResponseDto readDetail(@PathVariable Long postId){
+        return postService.readDetail(postId);
+    }
 }
