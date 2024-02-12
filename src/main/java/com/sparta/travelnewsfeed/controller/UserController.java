@@ -1,7 +1,7 @@
 package com.sparta.travelnewsfeed.controller;
 
 import com.sparta.travelnewsfeed.dto.request.SignupRequestDto;
-import com.sparta.travelnewsfeed.dto.response.CommonReponseDto;
+import com.sparta.travelnewsfeed.dto.response.CommonResponseDto;
 import com.sparta.travelnewsfeed.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,19 +19,19 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<CommonReponseDto> signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity<CommonResponseDto> signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
         try {
             userService.signup(signupRequestDto);
         } catch (IllegalArgumentException exception) {
             return ResponseEntity
                     .badRequest()
-                    .body(new CommonReponseDto("중복된 사용자이름 입니다.", HttpStatus.BAD_REQUEST.value()));
+                    .body(new CommonResponseDto("중복된 사용자이름 입니다.", HttpStatus.BAD_REQUEST.value()));
         }
 
         return ResponseEntity
                 .status(HttpStatus.CREATED.value())
-                .body(new CommonReponseDto("회원가입 되었습니다", HttpStatus.CREATED.value()));
+                .body(new CommonResponseDto("회원가입 되었습니다", HttpStatus.CREATED.value()));
     }
-    }
+}
 
 
