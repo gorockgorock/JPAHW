@@ -38,8 +38,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
                 String username = info.getSubject();
                 setAuthentication(username);
-
-
             }
         }else {
             CommonResponseDto commonResponseDto = new CommonResponseDto("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value());
