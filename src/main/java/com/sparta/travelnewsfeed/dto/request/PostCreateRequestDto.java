@@ -1,5 +1,6 @@
 package com.sparta.travelnewsfeed.dto.request;
 
+import com.sparta.travelnewsfeed.common.enumeration.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class PostCreateRequestDto {
     private String title;
     private String content;
-    private String category;
+    private Category category;
 }

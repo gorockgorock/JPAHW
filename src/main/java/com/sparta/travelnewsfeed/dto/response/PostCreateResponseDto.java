@@ -1,5 +1,6 @@
 package com.sparta.travelnewsfeed.dto.response;
 
+import com.sparta.travelnewsfeed.common.enumeration.Category;
 import com.sparta.travelnewsfeed.entity.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ public class PostCreateResponseDto {
     private Long postId;
     private String title;
     private String content;
-    private String category;
+    private Category category;
 
     public PostCreateResponseDto(Post post){
         this.postId = post.getPostId();
