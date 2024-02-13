@@ -41,8 +41,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public void delete(@PathVariable Long postId){
-        postService.delete(postId);
+    public void delete(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long postId){
+        postService.delete(userDetails.getUser(), postId);
     }
 
 }

@@ -50,8 +50,8 @@ public class PostService {
     }
 
     @Transactional
-    public void delete(Long postId) {
+    public void delete(User user, Long postId) {
         postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
-        postRepository.deleteById(postId);
+        postRepository.deleteByUserAndPostId(user, postId);
     }
 }
