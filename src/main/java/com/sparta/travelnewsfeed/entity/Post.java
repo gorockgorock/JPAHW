@@ -41,7 +41,8 @@ public class Post extends DateTime {
         this.category = postCreateRequestDto.getCategory();
     }
 
-    public void update(PostUpdateRequestDto postUpdateRequestDto) {
+    public void update(User user, PostUpdateRequestDto postUpdateRequestDto) {
+        this.user = user;
         this.title = postUpdateRequestDto.getTitle();
         this.content = postUpdateRequestDto.getContent();
         this.category = postUpdateRequestDto.getCategory();

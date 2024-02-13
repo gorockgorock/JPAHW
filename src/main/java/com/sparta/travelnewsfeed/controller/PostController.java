@@ -36,8 +36,8 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public PostUpdateResponseDto update(@PathVariable Long postId, @RequestBody PostUpdateRequestDto postUpdateRequestDto){
-        return postService.update(postId, postUpdateRequestDto);
+    public PostUpdateResponseDto update(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long postId, @RequestBody PostUpdateRequestDto postUpdateRequestDto){
+        return postService.update(userDetails.getUser(), postId, postUpdateRequestDto);
     }
 
     @DeleteMapping("/{postId}")

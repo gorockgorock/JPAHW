@@ -8,7 +8,9 @@ import com.sparta.travelnewsfeed.dto.response.PostUpdateResponseDto;
 import com.sparta.travelnewsfeed.entity.Post;
 import com.sparta.travelnewsfeed.repository.PostRepository;
 import com.sparta.travelnewsfeed.user.User;
+import com.sparta.travelnewsfeed.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,9 +43,9 @@ public class PostService {
     }
 
     @Transactional
-    public PostUpdateResponseDto update(Long postId, PostUpdateRequestDto postUpdateRequestDto) {
+    public PostUpdateResponseDto update(User user, Long postId, PostUpdateRequestDto postUpdateRequestDto) {
         Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
-        post.update(postUpdateRequestDto);
+        post.update(user, postUpdateRequestDto);
         return new PostUpdateResponseDto(post);
     }
 
