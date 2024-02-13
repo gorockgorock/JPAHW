@@ -9,18 +9,20 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class PostCreateResponseDto {
+public class PostReadResponseDto {
     private Long postId;
     private String title;
     private String content;
     private Category category;
     private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
-    public PostCreateResponseDto(Post post){
+    public PostReadResponseDto(Post post){
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.category = post.getCategory();
         this.createdAt = post.getCreatedAt();
+        this.modifiedAt = post.getModifiedAt();
     }
 }
