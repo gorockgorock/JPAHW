@@ -1,12 +1,9 @@
 package com.sparta.travelnewsfeed.user;
 
 import com.sparta.travelnewsfeed.dto.request.UserRequestDto;
-import com.sparta.travelnewsfeed.entity.Category;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Entity

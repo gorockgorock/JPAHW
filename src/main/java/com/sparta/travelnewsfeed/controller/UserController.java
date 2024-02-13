@@ -1,19 +1,14 @@
 package com.sparta.travelnewsfeed.controller;
 
 import com.sparta.travelnewsfeed.dto.request.SignupRequestDto;
-import com.sparta.travelnewsfeed.dto.request.UserRequestDto;
 import com.sparta.travelnewsfeed.dto.response.CommonResponseDto;
 import com.sparta.travelnewsfeed.dto.response.UserResponseDto;
 import com.sparta.travelnewsfeed.service.UserService;
-import com.sparta.travelnewsfeed.user.UserDetailsImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.RejectedExecutionException;
 
 
 @RestController

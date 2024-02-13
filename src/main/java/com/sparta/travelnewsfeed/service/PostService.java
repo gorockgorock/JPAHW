@@ -6,6 +6,7 @@ import com.sparta.travelnewsfeed.dto.response.PostCreateResponseDto;
 import com.sparta.travelnewsfeed.dto.response.PostReadResponseDto;
 import com.sparta.travelnewsfeed.entity.Post;
 import com.sparta.travelnewsfeed.repository.PostRepository;
+import com.sparta.travelnewsfeed.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +22,8 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public PostCreateResponseDto createPost(PostCreateRequestDto postCreateRequestDto) {
-        Post post = postRepository.save(new Post(postCreateRequestDto));
+    public PostCreateResponseDto createPost(User user, PostCreateRequestDto postCreateRequestDto) {
+        Post post = postRepository.save(new Post(user,postCreateRequestDto));
         return new PostCreateResponseDto(post);
     }
 

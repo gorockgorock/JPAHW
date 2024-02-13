@@ -3,7 +3,6 @@ package com.sparta.travelnewsfeed.service;
 import com.sparta.travelnewsfeed.dto.request.SignupRequestDto;
 import com.sparta.travelnewsfeed.dto.request.UserRequestDto;
 import com.sparta.travelnewsfeed.dto.response.UserResponseDto;
-import com.sparta.travelnewsfeed.entity.Category;
 import com.sparta.travelnewsfeed.jwt.JwtUtil;
 import com.sparta.travelnewsfeed.repository.UserRepository;
 import com.sparta.travelnewsfeed.user.User;
