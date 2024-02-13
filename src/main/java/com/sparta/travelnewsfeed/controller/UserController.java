@@ -2,19 +2,18 @@ package com.sparta.travelnewsfeed.controller;
 
 import com.sparta.travelnewsfeed.dto.request.SignupRequestDto;
 import com.sparta.travelnewsfeed.dto.response.CommonResponseDto;
+import com.sparta.travelnewsfeed.dto.response.UserResponseDto;
 import com.sparta.travelnewsfeed.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/travel/user")
+@RequestMapping("/api/travel/users")
 public class UserController {
     private final UserService userService;
 
@@ -32,6 +31,16 @@ public class UserController {
                 .status(HttpStatus.CREATED.value())
                 .body(new CommonResponseDto("회원가입 되었습니다", HttpStatus.CREATED.value()));
     }
+    @GetMapping("/{username}")
+    public ResponseEntity<CommonResponseDto> getUser(@PathVariable String username) {
+        try {
+            UserResponseDto responseDTO = userService.getUserDto(username);
+            return ResponseEntity.ok().body(responseDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        }
+    }
+
 }
 
 

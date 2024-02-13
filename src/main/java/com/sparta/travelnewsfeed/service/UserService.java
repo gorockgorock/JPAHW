@@ -1,6 +1,7 @@
 package com.sparta.travelnewsfeed.service;
 
 import com.sparta.travelnewsfeed.dto.request.SignupRequestDto;
+import com.sparta.travelnewsfeed.dto.response.UserResponseDto;
 import com.sparta.travelnewsfeed.entity.Category;
 import com.sparta.travelnewsfeed.jwt.JwtUtil;
 import com.sparta.travelnewsfeed.repository.UserRepository;
@@ -16,6 +17,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
+
     public void signup (SignupRequestDto signupRequestDto){
         String username = signupRequestDto.getUsername();
         String email = signupRequestDto.getEmail();
@@ -29,6 +31,18 @@ public class UserService {
         User user = new User(username, email, password, phone_number,category);
         userRepository.save(user);
 
+    }
+
+    public UserResponseDto getUserDto(String username) {
+        User user = getUser(username);
+        return new UserResponseDto(user);
+    }
+
+
+    public User getUser(String username) {
+
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 사용자입니다."));
     }
 
 }
