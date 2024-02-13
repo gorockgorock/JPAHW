@@ -26,8 +26,6 @@ public class User {
     @Column(nullable = true)
     private String phone_number;
 
-
-
     public User(String username, String email, String password, String phone_number) {
         this.username = username;
         this.email = email;
@@ -44,5 +42,3 @@ public class User {
     }
 
 }
-
-

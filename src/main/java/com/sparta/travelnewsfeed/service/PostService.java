@@ -8,9 +8,7 @@ import com.sparta.travelnewsfeed.dto.response.PostUpdateResponseDto;
 import com.sparta.travelnewsfeed.entity.Post;
 import com.sparta.travelnewsfeed.repository.PostRepository;
 import com.sparta.travelnewsfeed.user.User;
-import com.sparta.travelnewsfeed.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

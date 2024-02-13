@@ -1,6 +1,5 @@
 package com.sparta.travelnewsfeed.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.travelnewsfeed.jwt.JwtAuthenticationFilter;
 import com.sparta.travelnewsfeed.jwt.JwtAuthorizationFilter;
 import com.sparta.travelnewsfeed.jwt.JwtUtil;
