@@ -1,3 +1,4 @@
+
 package com.sparta.travelnewsfeed.dto.response;
 
 import com.sparta.travelnewsfeed.common.enumeration.Category;

@@ -18,17 +18,15 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     // 댓글과 게시물 간의 다대일 관계를 정의한다.
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", nullable = false)
     // 관계의 외래 키를 지정한다.
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     // 이 필드가 "created_at"에 맵핑되고, null이 불가능하며, 업데이트가 불가능하다.
@@ -47,13 +45,13 @@ public class Comment {
     @PreUpdate
     //엔티티가 업데이트될 때 실행되는 로직을 구현할때 사용하는 어노테이션
     protected void onUpdate() {
+
         updatedAt = LocalDateTime.now();
     }
 
-    public Long getPostId() {
-        // 널을 처리하여 연결된 게시물의 ID를 안전하게 가져오는 메서드이다,
-        return post != null ? post.getPostid() : null;
 
+    public Comment(String text, Post post) {
+        this.text = text;
+        this.post = post;
     }
-
 }

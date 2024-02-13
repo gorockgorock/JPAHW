@@ -1,5 +1,6 @@
 package com.sparta.travelnewsfeed.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,14 +10,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CommentResponseDTO {
+@AllArgsConstructor
+public class CommentResponseDto {
     private Long id;
     private String text;
-    private String username;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Long postId;
 
-    public CommentResponseDTO(Long id, String text, Object username, Long id1, LocalDateTime createdAt, LocalDateTime updatedAt) {
-    }
+
 }
