@@ -1,6 +1,7 @@
 package com.sparta.travelnewsfeed.controller;
 
 import com.sparta.travelnewsfeed.dto.request.CommentRequestDTO;
+import com.sparta.travelnewsfeed.dto.response.CommentResponseDTO;
 import com.sparta.travelnewsfeed.entity.Comment;
 import com.sparta.travelnewsfeed.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -19,26 +20,26 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<Comment> createComment(@RequestBody CommentRequestDTO requestDTO) {
-        Comment comment = commentService.createComment(requestDTO);
+    public ResponseEntity<CommentResponseDTO> createComment(@RequestBody CommentRequestDTO requestDTO) {
+        CommentResponseDTO comment = commentService.createComment(requestDTO);
         return ResponseEntity.ok(comment);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Comment> getCommentById(@PathVariable Long id) {
-        Comment comment = commentService.getCommentById(id);
+    public ResponseEntity<CommentResponseDTO> getCommentById(@PathVariable Long id) {
+        CommentResponseDTO comment = commentService.getCommentById(id);
         return ResponseEntity.ok(comment);
     }
 
     @GetMapping
-    public ResponseEntity<List<Comment>> getAllComments() {
-        List<Comment> comments = commentService.getAllComments();
+    public ResponseEntity<List<CommentResponseDTO>> getAllComments() {
+        List<CommentResponseDTO> comments = commentService.getAllComments();
         return ResponseEntity.ok(comments);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Comment> updateComment(@PathVariable Long id, @RequestBody CommentRequestDTO requestDTO) {
-        Comment updatedComment = commentService.updateComment(id, requestDTO);
+    public ResponseEntity<CommentResponseDTO> updateComment(@PathVariable Long id, @RequestBody CommentRequestDTO requestDTO) {
+        CommentResponseDTO updatedComment = commentService.updateComment(id, requestDTO);
         return ResponseEntity.ok(updatedComment);
     }
 
