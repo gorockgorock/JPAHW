@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +33,6 @@ public class CommentService {
         Comment comment = new Comment();
         comment.setText(dto.getText());
         comment.setPost(post);
-        // Assuming Comment entity auto-generates createdAt and updatedAt
 
         Comment savedComment = commentRepository.save(comment);
 
@@ -63,7 +61,6 @@ public class CommentService {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));
         comment.setText(dto.getText());
-        // Apply other updates as necessary
         comment = commentRepository.save(comment);
         return new CommentResponseDto(comment.getId(), comment.getText(), comment.getCreatedAt(), comment.getUpdatedAt());
     }

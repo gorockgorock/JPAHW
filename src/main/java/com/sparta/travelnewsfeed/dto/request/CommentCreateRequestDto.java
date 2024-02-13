@@ -9,5 +9,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CommentCreateRequestDto {
     private String text;
-    private Long postId; // Ensure this attribute is included to link to the Post entity
+    private Long postId;
 }
