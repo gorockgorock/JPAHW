@@ -29,7 +29,7 @@ public class CommentService {
     @Transactional
     public CommentResponseDto createComment(CommentCreateRequestDto dto) {
         Post post = postRepository.findById(dto.getPostId())
-                .orElseThrow(() -> new RuntimeException("Post not found with id: " + dto.getPostId()));
+                .orElseThrow(() -> new RuntimeException("게시물 을 찾을 수 없습니다. id: " + dto.getPostId()));
 
         Comment comment = new Comment();
         comment.setText(dto.getText());
