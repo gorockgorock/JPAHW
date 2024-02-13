@@ -18,9 +18,6 @@ import java.io.IOException;
 
 @Slf4j(topic = "로그인 및 JWT 생성")
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    //원래 UsernamePasswordAuthenticationFilter가 하는 역할은 사용자가 username이랑 password 보내면
-    //인증객체인 UsernamePasswordAuthenticationToken을 만든 다음에 AuthenticationManager를 통해서 확인
-    //이걸 직접 하려는 것. UsernamePasswordAuthenticationFilter는 세션 방식. 우리는 jwt 방식 이용할거니까.
     private final JwtUtil jwtUtil;
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {

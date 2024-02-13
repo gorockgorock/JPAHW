@@ -46,15 +46,16 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{password}")
-    public ResponseEntity<CommonResponseDto> updateUser(@PathVariable String password, @RequestBody UserRequestDto userRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        try {
-            UserResponseDto responseDTO = userService.updateUser(password, userRequestDto, userDetails.getUser());
-            return ResponseEntity.ok().body(responseDTO);
-        } catch (RejectedExecutionException | IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
-        }
-    }
+//    @PutMapping("/update")
+//    public ResponseEntity<CommonResponseDto> updateUser(@RequestHeader(
+//            "PASSWORD") String password, @RequestBody UserRequestDto userRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        try {
+//            UserResponseDto responseDTO = userService.updateUser(password, userRequestDto, userDetails.getUser());
+//            return ResponseEntity.ok().body(responseDTO);
+//        } catch (RejectedExecutionException | IllegalArgumentException ex) {
+//            return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+//        }
+//    }
 
 }
 
