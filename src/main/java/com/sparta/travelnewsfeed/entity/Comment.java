@@ -52,7 +52,7 @@ public class Comment {
 
     public Long getPostId() {
         // 널을 처리하여 연결된 게시물의 ID를 안전하게 가져오는 메서드이다,
-        return post != null ? post.getId() : null;
+        return post != null ? post.getPostid() : null;
 
     }
 
