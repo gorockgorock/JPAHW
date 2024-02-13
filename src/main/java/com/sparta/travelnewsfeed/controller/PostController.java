@@ -4,6 +4,7 @@ import com.sparta.travelnewsfeed.dto.request.PostCreateRequestDto;
 import com.sparta.travelnewsfeed.dto.request.PostUpdateRequestDto;
 import com.sparta.travelnewsfeed.dto.response.PostCreateResponseDto;
 import com.sparta.travelnewsfeed.dto.response.PostReadResponseDto;
+import com.sparta.travelnewsfeed.dto.response.PostUpdateResponseDto;
 import com.sparta.travelnewsfeed.service.PostService;
 import com.sparta.travelnewsfeed.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public PostReadResponseDto update(@PathVariable Long postId, @RequestBody PostUpdateRequestDto postUpdateRequestDto){
+    public PostUpdateResponseDto update(@PathVariable Long postId, @RequestBody PostUpdateRequestDto postUpdateRequestDto){
         return postService.update(postId, postUpdateRequestDto);
     }
 
