@@ -4,6 +4,7 @@ import com.sparta.travelnewsfeed.dto.request.PostCreateRequestDto;
 import com.sparta.travelnewsfeed.dto.request.PostUpdateRequestDto;
 import com.sparta.travelnewsfeed.dto.response.PostCreateResponseDto;
 import com.sparta.travelnewsfeed.dto.response.PostReadResponseDto;
+import com.sparta.travelnewsfeed.dto.response.PostUpdateResponseDto;
 import com.sparta.travelnewsfeed.entity.Post;
 import com.sparta.travelnewsfeed.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,10 +40,10 @@ public class PostService {
     }
 
     @Transactional
-    public PostReadResponseDto update(Long postId, PostUpdateRequestDto postUpdateRequestDto) {
+    public PostUpdateResponseDto update(Long postId, PostUpdateRequestDto postUpdateRequestDto) {
         Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
         post.update(postUpdateRequestDto);
-        return new PostReadResponseDto(post);
+        return new PostUpdateResponseDto(post);
     }
 
     @Transactional
