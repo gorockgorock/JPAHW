@@ -1,9 +1,11 @@
 package com.sparta.travelnewsfeed.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.travelnewsfeed.jwt.JwtAuthenticationFilter;
 import com.sparta.travelnewsfeed.jwt.JwtAuthorizationFilter;
 import com.sparta.travelnewsfeed.jwt.JwtUtil;
 import com.sparta.travelnewsfeed.user.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
@@ -26,21 +29,16 @@ public class WebSecurityConfig {
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationConfiguration authenticationConfiguration;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-    public WebSecurityConfig(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService, AuthenticationConfiguration authenticationConfiguration) {
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
-        this.authenticationConfiguration = authenticationConfiguration;
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-    //AuthenticationManager 만드는 매서드
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {

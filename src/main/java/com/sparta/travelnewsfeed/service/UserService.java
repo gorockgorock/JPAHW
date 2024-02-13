@@ -24,12 +24,11 @@ public class UserService {
         String email = signupRequestDto.getEmail();
         String password = passwordEncoder.encode(signupRequestDto.getPassword());
         String phone_number = signupRequestDto.getPhone_number();
-        Category category = signupRequestDto.getCategory();
 
         if (userRepository.findByUsername(username).isPresent()){
             throw new IllegalArgumentException("이미 존재하는 유저이름입니다");
         }
-        User user = new User(username, email, password, phone_number,category);
+        User user = new User(username, email, password, phone_number);
         userRepository.save(user);
 
     }

@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -32,23 +33,29 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
-        String tokenValue = jwtUtil.substringToken(req);
-        if(Objects.nonNull(tokenValue)){
-            if(jwtUtil.validateToken(tokenValue)){
+        if (!req.getRequestURI().contains("api/travel/users/signup")){
+            String tokenValue = jwtUtil.getTokenFromRequest(req);
+            if (StringUtils.hasText(tokenValue)) {
+
+                tokenValue = jwtUtil.substringToken(tokenValue);
+
+                if (!jwtUtil.validateToken(tokenValue)) {
+                    log.error("Token Error");
+                    return;
+                }
+
                 Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
-                String username = info.getSubject();
-                setAuthentication(username);
+
+                try {
+                    setAuthentication(info.getSubject());
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                    return;
+                }
             }
-        }else {
-            CommonResponseDto commonResponseDto = new CommonResponseDto("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value());
-            res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            res.setContentType("application/json; charset=UTF-8");
-            res.getWriter().write(objectMapper.writeValueAsString(commonResponseDto));
-            return;
         }
 
         filterChain.doFilter(req, res);
-
     }
 
     public void setAuthentication(String username) {

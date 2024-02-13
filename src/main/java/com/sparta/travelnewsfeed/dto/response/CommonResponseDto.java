@@ -9,12 +9,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 public class CommonResponseDto {
 
         private String msg;
         private Integer statusCode;
+
+        public CommonResponseDto (String msg, Integer statusCode ) {
+            this.msg = msg;
+            this.statusCode = statusCode;
+        }
     }
 

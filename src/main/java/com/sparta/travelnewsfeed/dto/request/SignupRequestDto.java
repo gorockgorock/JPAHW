@@ -24,6 +24,5 @@ public class SignupRequestDto {
     private String password;
     @Pattern(regexp = "^[0-9]{3,20}", message = "숫자만 입력해주세요")
     private String phone_number;
-    @Enumerated(value = EnumType.STRING)
-    private Category category;
+
 }
