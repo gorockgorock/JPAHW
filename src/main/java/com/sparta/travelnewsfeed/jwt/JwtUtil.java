@@ -22,7 +22,7 @@ public class JwtUtil {
 
     private final long TOKEN_TIME = 60 * 60 * 1000L;
 
-    @Value("7JWE7J2065OkCg==") // Base64 Encode 한 SecretKey
+    @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
     private String secretKey;
 
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;

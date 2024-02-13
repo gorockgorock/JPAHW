@@ -1,5 +1,6 @@
 package com.sparta.travelnewsfeed.user;
 
+import com.sparta.travelnewsfeed.dto.request.UserRequestDto;
 import com.sparta.travelnewsfeed.entity.Category;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -39,6 +40,13 @@ public class User {
         this.password = password;
         this.phone_number = phone_number;
         this.category = category;
+    }
+    public void update (UserRequestDto userRequestDto){
+        this.username = userRequestDto.getUsername();
+        this.email = userRequestDto.getEmail();
+        this.phone_number = userRequestDto.getPhone_number();
+        this.category = userRequestDto.getCategory();
+
     }
 
 }
