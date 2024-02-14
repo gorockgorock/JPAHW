@@ -40,7 +40,7 @@ public class CommentService {
         Post post = postRepository.findById(dto.getPostId())
                 .orElseThrow(() -> new IllegalArgumentException("게시물 을 찾을 수 없습니다. id: " + dto.getPostId()));
         User user = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("유저이름으로 유저를 찾을 수 없습니다. 이름: " + dto.getUsername()));
+                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다. 이름: " + dto.getUsername()));
 
         Comment comment = new Comment();
         comment.setText(dto.getText());
