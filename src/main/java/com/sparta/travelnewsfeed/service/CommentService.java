@@ -73,6 +73,7 @@ public class CommentService {
                 updatedComment.getCreatedAt(), updatedComment.getUpdatedAt(), user.getUsername());
     }
 
+    @Transactional
     public void deleteComment(User user, Long id) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("댓글 id를 찾을 수 없습니다. id: " + id));
