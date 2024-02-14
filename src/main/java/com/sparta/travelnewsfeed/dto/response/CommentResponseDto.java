@@ -1,5 +1,6 @@
 package com.sparta.travelnewsfeed.dto.response;
 
+import com.sparta.travelnewsfeed.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,6 @@ public class CommentResponseDto {
     private String username;
 
 
+    public CommentResponseDto(Comment comment) {
+    }
 }
