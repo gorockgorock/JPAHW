@@ -26,12 +26,12 @@ public class PostController {
         return ResponseEntity.ok().body(postService.createPost(userDetails.getUser(),postCreateRequestDto));
     }
 
-    @GetMapping
+    @GetMapping("/read")
     public ResponseEntity<List<PostReadResponseDto>> readAll(){
         return ResponseEntity.ok().body(postService.readAll());
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping("/read/{postId}")
     public ResponseEntity<PostReadResponseDto> readDetail(@PathVariable Long postId){
         return ResponseEntity.ok().body(postService.readDetail(postId));
     }
