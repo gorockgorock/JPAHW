@@ -37,8 +37,6 @@ public class User {
         this.username = userRequestDto.getUsername();
         this.email = userRequestDto.getEmail();
         this.phone_number = userRequestDto.getPhone_number();
-
-
     }
 
 }

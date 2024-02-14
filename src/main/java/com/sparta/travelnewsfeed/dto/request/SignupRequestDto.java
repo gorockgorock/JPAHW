@@ -11,7 +11,6 @@ import lombok.Setter;
 public class SignupRequestDto {
     @NotBlank
     @Pattern(regexp = "^[a-zA-z0-9]{4,10}", message = "4자 이상 10자 이하영어 대소문자나 숫자만 가능합니다")
-    //@(min=4, max=10, message = "4글자이상 10글자 이하로 입력해주세요")
     private String username;
     @Email
     @NotBlank

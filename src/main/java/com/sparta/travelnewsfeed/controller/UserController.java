@@ -1,19 +1,26 @@
 package com.sparta.travelnewsfeed.controller;
 
 import com.sparta.travelnewsfeed.dto.request.SignupRequestDto;
+import com.sparta.travelnewsfeed.dto.request.UserRequestDto;
 import com.sparta.travelnewsfeed.dto.response.CommonResponseDto;
 import com.sparta.travelnewsfeed.dto.response.UserResponseDto;
 import com.sparta.travelnewsfeed.service.UserService;
+import com.sparta.travelnewsfeed.user.UserDetailsImpl;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.RejectedExecutionException;
 
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/travel/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
@@ -41,16 +48,23 @@ public class UserController {
         }
     }
 
-//    @PutMapping("/update")
-//    public ResponseEntity<CommonResponseDto> updateUser(@RequestHeader(
-//            "PASSWORD") String password, @RequestBody UserRequestDto userRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        try {
-//            UserResponseDto responseDTO = userService.updateUser(password, userRequestDto, userDetails.getUser());
-//            return ResponseEntity.ok().body(responseDTO);
-//        } catch (RejectedExecutionException | IllegalArgumentException ex) {
-//            return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
-//        }
-//    }
+    @PutMapping("/update")
+    public ResponseEntity<CommonResponseDto> updateUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody UserRequestDto userRequestDto) {
+        try {
+            UserResponseDto responseDTO = userService.updateUser(userDetails.getUser(),userRequestDto);
+            return ResponseEntity.ok().body(responseDTO);
+        } catch (RejectedExecutionException | IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        }
+    }
+
+    @RequestMapping(value="/logout", method=RequestMethod.GET)
+
+    public void deleteCookie(HttpServletResponse response){
+            Cookie cookie = new Cookie("AUTHORIZATION_HEADER", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+    }
 
 }
 

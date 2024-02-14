@@ -7,16 +7,12 @@ import com.sparta.travelnewsfeed.dto.response.PostReadResponseDto;
 import com.sparta.travelnewsfeed.dto.response.PostUpdateResponseDto;
 import com.sparta.travelnewsfeed.entity.Post;
 import com.sparta.travelnewsfeed.repository.PostRepository;
-import com.sparta.travelnewsfeed.repository.UserRepository;
 import com.sparta.travelnewsfeed.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.naming.AuthenticationException;
 import java.util.List;
@@ -30,7 +26,6 @@ public class PostService {
 
     private final PasswordEncoder passwordEncoder;
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
 
     @Transactional
     public PostCreateResponseDto createPost(User user, PostCreateRequestDto postCreateRequestDto) {
@@ -66,10 +61,10 @@ public class PostService {
     public void delete(User user,String password, Long postId) throws NoSuchElementException {
         Post post = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("해당 글을 찾을 수 없습니다."));
 
-        if(Objects.equals(user.getId(),post.getUser().getId()) && passwordEncoder.matches(password,user.getPassword())){
-            postRepository.deleteByUserAndPostId(user, postId);
+        if(Objects.equals(user.getId(), post.getUser().getId()) && passwordEncoder.matches(password.toString(),user.getPassword())){
+            postRepository.deleteById(postId);
         }else{
-            new AuthenticationException("권한이 없습니다.");
+            System.out.println(new AuthenticationException("권한이 없습니다."));
         }
     }
 }

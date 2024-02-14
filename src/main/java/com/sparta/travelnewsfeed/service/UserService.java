@@ -37,6 +37,7 @@ public class UserService {
         User user = getUser(username);
         return new UserResponseDto(user);
     }
+
     @Transactional
     public UserResponseDto updateUser(String password, UserRequestDto userRequestDto, User user) {
         if(passwordEncoder.matches(password, user.getPassword())) {
