@@ -2,16 +2,12 @@ package com.sparta.travelnewsfeed.controller;
 
 import com.sparta.travelnewsfeed.dto.request.CommentCreateRequestDto;
 import com.sparta.travelnewsfeed.dto.request.CommentUpdateRequestDto;
-import com.sparta.travelnewsfeed.dto.request.PostUpdateRequestDto;
 import com.sparta.travelnewsfeed.dto.response.CommentResponseDto;
-import com.sparta.travelnewsfeed.dto.response.PostUpdateResponseDto;
 import com.sparta.travelnewsfeed.service.CommentService;
 import com.sparta.travelnewsfeed.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,7 +45,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails,@RequestBody String password, @PathVariable Long id) {
+    public ResponseEntity<Void> deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
         commentService.deleteComment(userDetails.getUser(), id);
         return ResponseEntity.ok().build();
     }
