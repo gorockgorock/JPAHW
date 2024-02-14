@@ -20,7 +20,7 @@ import java.util.concurrent.RejectedExecutionException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/travel/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
