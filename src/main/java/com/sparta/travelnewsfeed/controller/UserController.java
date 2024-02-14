@@ -49,12 +49,12 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<CommonResponseDto> updateUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<UserResponseDto> updateUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody UserRequestDto userRequestDto) {
         try {
             UserResponseDto responseDTO = userService.updateUser(userDetails.getUser(),userRequestDto);
             return ResponseEntity.ok().body(responseDTO);
         } catch (RejectedExecutionException | IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+            return null;
         }
     }
 
