@@ -41,8 +41,7 @@ public class CommentService {
     public CommentResponseDto getCommentById(Long id) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("댓글 id를 찾을 수 없습니다. id: " + id));
-        String username = comment.getUser().getUsername();
-        return new CommentResponseDto(comment.getId(), comment.getText(), comment.getCreatedAt(), comment.getUpdatedAt(), username);
+        return new CommentResponseDto(comment.getId(), comment.getText(), comment.getCreatedAt(), comment.getUpdatedAt(), comment.getUser().getUsername());
     }
 
     public List<CommentResponseDto> findAllComments() {
