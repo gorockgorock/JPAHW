@@ -36,20 +36,20 @@ public class PostService {
     }
 
     public PostReadResponseDto readDetail(Long postId) throws NoSuchElementException {
-        Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
+        Post post = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("해당 글을 찾을 수 없습니다."));
         return new PostReadResponseDto(post);
     }
 
     @Transactional
-    public PostUpdateResponseDto update(User user, Long postId, PostUpdateRequestDto postUpdateRequestDto) {
-        Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
+    public PostUpdateResponseDto update(User user, Long postId, PostUpdateRequestDto postUpdateRequestDto) throws NoSuchElementException{
+        Post post = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("해당 글을 찾을 수 없습니다."));
         post.update(user, postUpdateRequestDto);
         return new PostUpdateResponseDto(post);
     }
 
     @Transactional
-    public void delete(User user, Long postId) {
-        postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
+    public void delete(User user, Long postId) throws NoSuchElementException {
+        postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("해당 글을 찾을 수 없습니다."));
         postRepository.deleteByUserAndPostId(user, postId);
     }
 }
