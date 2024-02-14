@@ -72,12 +72,6 @@ public class WebSecurityConfig {
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        http
-
-                .logout((logout) -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/api/travel/users/logout"))
-                        .logoutSuccessUrl("/")
-                        .invalidateHttpSession(true));
 
         return http.build();
     }

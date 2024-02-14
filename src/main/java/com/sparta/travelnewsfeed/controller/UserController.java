@@ -6,6 +6,8 @@ import com.sparta.travelnewsfeed.dto.response.CommonResponseDto;
 import com.sparta.travelnewsfeed.dto.response.UserResponseDto;
 import com.sparta.travelnewsfeed.service.UserService;
 import com.sparta.travelnewsfeed.user.UserDetailsImpl;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -54,6 +56,14 @@ public class UserController {
         } catch (RejectedExecutionException | IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
+    }
+
+    @RequestMapping(value="/logout", method=RequestMethod.GET)
+
+    public void deleteCookie(HttpServletResponse response){
+            Cookie cookie = new Cookie("AUTHORIZATION_HEADER", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 
 }
