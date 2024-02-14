@@ -4,8 +4,10 @@ import com.sparta.travelnewsfeed.dto.request.PostCreateRequestDto;
 import com.sparta.travelnewsfeed.dto.request.PostUpdateRequestDto;
 import com.sparta.travelnewsfeed.dto.response.PostCreateResponseDto;
 import com.sparta.travelnewsfeed.dto.response.PostReadResponseDto;
+import com.sparta.travelnewsfeed.dto.response.PostUpdateResponseDto;
 import com.sparta.travelnewsfeed.entity.Post;
 import com.sparta.travelnewsfeed.repository.PostRepository;
+import com.sparta.travelnewsfeed.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +23,8 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public PostCreateResponseDto createPost(PostCreateRequestDto postCreateRequestDto) {
-        Post post = postRepository.save(new Post(postCreateRequestDto));
+    public PostCreateResponseDto createPost(User user, PostCreateRequestDto postCreateRequestDto) {
+        Post post = postRepository.save(new Post(user,postCreateRequestDto));
         return new PostCreateResponseDto(post);
     }
 
@@ -39,15 +41,15 @@ public class PostService {
     }
 
     @Transactional
-    public PostReadResponseDto update(Long postId, PostUpdateRequestDto postUpdateRequestDto) {
+    public PostUpdateResponseDto update(User user, Long postId, PostUpdateRequestDto postUpdateRequestDto) {
         Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
-        post.update(postUpdateRequestDto);
-        return new PostReadResponseDto(post);
+        post.update(user, postUpdateRequestDto);
+        return new PostUpdateResponseDto(post);
     }
 
     @Transactional
-    public void delete(Long postId) {
+    public void delete(User user, Long postId) {
         postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
-        postRepository.deleteById(postId);
+        postRepository.deleteByUserAndPostId(user, postId);
     }
 }
