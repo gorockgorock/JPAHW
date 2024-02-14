@@ -1,12 +1,9 @@
 package com.sparta.travelnewsfeed.user;
 
 import com.sparta.travelnewsfeed.dto.request.UserRequestDto;
-import com.sparta.travelnewsfeed.entity.Category;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Entity
@@ -29,8 +26,6 @@ public class User {
     @Column(nullable = true)
     private String phone_number;
 
-
-
     public User(String username, String email, String password, String phone_number) {
         this.username = username;
         this.email = email;
@@ -42,10 +37,6 @@ public class User {
         this.username = userRequestDto.getUsername();
         this.email = userRequestDto.getEmail();
         this.phone_number = userRequestDto.getPhone_number();
-
-
     }
 
 }
-
-

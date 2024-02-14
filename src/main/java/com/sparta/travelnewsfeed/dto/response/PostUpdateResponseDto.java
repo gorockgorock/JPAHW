@@ -5,22 +5,18 @@ import com.sparta.travelnewsfeed.entity.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor
-public class PostCreateResponseDto {
+public class PostUpdateResponseDto {
     private Long postId;
     private String title;
     private String content;
     private Category category;
-    private LocalDateTime createdAt;
 
-    public PostCreateResponseDto(Post post){
+    public PostUpdateResponseDto(Post post){
         this.postId = post.getPostId();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.category = post.getCategory();
-        this.createdAt = post.getCreatedAt();
     }
 }

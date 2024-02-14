@@ -1,6 +1,5 @@
 package com.sparta.travelnewsfeed.dto.request;
 
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -14,6 +13,8 @@ public class UserRequestDto {
     @Email
     @NotBlank
     private String email;
+    @Pattern(regexp = "^[a-zA-z0-9]{8,15}", message = "8자 이상 15자 이하영어 대소문자나 숫자만 가능합니다")
+    private String password;
     @Pattern(regexp = "^[0-9]{3,20}", message = "숫자만 입력해주세요")
     private String phone_number;
 

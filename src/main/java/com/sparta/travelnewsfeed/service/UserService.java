@@ -3,7 +3,6 @@ package com.sparta.travelnewsfeed.service;
 import com.sparta.travelnewsfeed.dto.request.SignupRequestDto;
 import com.sparta.travelnewsfeed.dto.request.UserRequestDto;
 import com.sparta.travelnewsfeed.dto.response.UserResponseDto;
-import com.sparta.travelnewsfeed.entity.Category;
 import com.sparta.travelnewsfeed.jwt.JwtUtil;
 import com.sparta.travelnewsfeed.repository.UserRepository;
 import com.sparta.travelnewsfeed.user.User;
@@ -37,11 +36,10 @@ public class UserService {
         User user = getUser(username);
         return new UserResponseDto(user);
     }
-    public UserResponseDto updateUser(String password, UserRequestDto userRequestDto, User user) {
-        if(passwordEncoder.matches(password, user.getPassword())) {
-            User newUser = getUser(userRequestDto.getUsername());
-            newUser.update(userRequestDto);
-            return new UserResponseDto(newUser);
+    public UserResponseDto updateUser(User user,UserRequestDto userRequestDto) {
+        if(passwordEncoder.matches(user.getPassword(),userRequestDto.getPassword())) {
+            user.update(userRequestDto);
+            return new UserResponseDto(user);
         } else {  throw new IllegalAccessError("비밀번호가 일치하지 않습니다.");
         }
     }

@@ -1,12 +1,6 @@
 package com.sparta.travelnewsfeed.dto.response;
 
-import com.sparta.travelnewsfeed.entity.Category;
 import com.sparta.travelnewsfeed.user.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import lombok.NoArgsConstructor;
-
 
 public class UserResponseDto extends CommonResponseDto{
     private Long id;

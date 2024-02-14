@@ -1,6 +1,5 @@
 package com.sparta.travelnewsfeed.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.travelnewsfeed.jwt.JwtAuthenticationFilter;
 import com.sparta.travelnewsfeed.jwt.JwtAuthorizationFilter;
 import com.sparta.travelnewsfeed.jwt.JwtUtil;
@@ -19,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @RequiredArgsConstructor
@@ -70,6 +71,13 @@ public class WebSecurityConfig {
         // 필터 관리
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        http
+
+                .logout((logout) -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/api/travel/users/logout"))
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true));
 
         return http.build();
     }
