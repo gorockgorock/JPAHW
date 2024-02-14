@@ -9,6 +9,7 @@ import com.sparta.travelnewsfeed.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-
+@Transactional
     public void signup (SignupRequestDto signupRequestDto){
         String username = signupRequestDto.getUsername();
         String email = signupRequestDto.getEmail();
@@ -36,6 +37,7 @@ public class UserService {
         User user = getUser(username);
         return new UserResponseDto(user);
     }
+    @Transactional
     public UserResponseDto updateUser(String password, UserRequestDto userRequestDto, User user) {
         if(passwordEncoder.matches(password, user.getPassword())) {
             User newUser = getUser(userRequestDto.getUsername());

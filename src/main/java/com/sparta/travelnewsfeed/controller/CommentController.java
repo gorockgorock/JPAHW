@@ -5,8 +5,9 @@ import com.sparta.travelnewsfeed.dto.request.CommentUpdateRequestDto;
 import com.sparta.travelnewsfeed.dto.response.CommentResponseDto;
 import com.sparta.travelnewsfeed.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,10 +39,16 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommentResponseDto> updateComment(@PathVariable Long id, @RequestBody CommentUpdateRequestDto dto) {
-        CommentResponseDto updatedComment = commentService.updateComment(id, dto);
+    public ResponseEntity<CommentResponseDto> updateComment(@PathVariable Long id,
+                                                            @RequestBody CommentUpdateRequestDto dto,
+                                                            @RequestParam("password") String password) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        CommentResponseDto updatedComment = commentService.updateComment(id, dto, username, password);
         return ResponseEntity.ok(updatedComment);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {

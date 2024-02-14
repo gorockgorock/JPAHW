@@ -1,5 +1,6 @@
 package com.sparta.travelnewsfeed.entity;
 
+import com.sparta.travelnewsfeed.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +22,15 @@ public class Comment {
     @Column(nullable = false)
     private String text;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     // 댓글과 게시물 간의 다대일 관계를 정의한다.
     @JoinColumn(name = "post_id", nullable = false)
     // 관계의 외래 키를 지정한다.
     private Post post;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 
     @Column(name = "created_at", nullable = false, updatable = false)
