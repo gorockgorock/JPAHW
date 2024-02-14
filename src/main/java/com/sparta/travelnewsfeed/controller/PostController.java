@@ -8,6 +8,7 @@ import com.sparta.travelnewsfeed.dto.response.PostUpdateResponseDto;
 import com.sparta.travelnewsfeed.service.PostService;
 import com.sparta.travelnewsfeed.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,28 +22,29 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public PostCreateResponseDto createPost(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PostCreateRequestDto postCreateRequestDto){
-        return postService.createPost(userDetails.getUser(),postCreateRequestDto);
+    public ResponseEntity<PostCreateResponseDto> createPost(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PostCreateRequestDto postCreateRequestDto){
+        return ResponseEntity.ok().body(postService.createPost(userDetails.getUser(),postCreateRequestDto));
     }
 
     @GetMapping
-    public List<PostReadResponseDto> readAll(){
-        return postService.readAll();
+    public ResponseEntity<List<PostReadResponseDto>> readAll(){
+        return ResponseEntity.ok().body(postService.readAll());
     }
 
     @GetMapping("/{postId}")
-    public PostReadResponseDto readDetail(@PathVariable Long postId){
-        return postService.readDetail(postId);
+    public ResponseEntity<PostReadResponseDto> readDetail(@PathVariable Long postId){
+        return ResponseEntity.ok().body(postService.readDetail(postId));
     }
 
     @PutMapping("/{postId}")
-    public PostUpdateResponseDto update(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long postId, @RequestBody PostUpdateRequestDto postUpdateRequestDto){
-        return postService.update(userDetails.getUser(), postId, postUpdateRequestDto);
+    public ResponseEntity<PostUpdateResponseDto> update(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long postId, @RequestBody PostUpdateRequestDto postUpdateRequestDto){
+        return ResponseEntity.ok().body(postService.update(userDetails.getUser(), postId, postUpdateRequestDto));
     }
 
     @DeleteMapping("/{postId}")
-    public void delete(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long postId){
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long postId){
         postService.delete(userDetails.getUser(), postId);
+        return ResponseEntity.ok().build();
     }
 
 }
