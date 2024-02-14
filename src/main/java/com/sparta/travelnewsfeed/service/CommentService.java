@@ -13,22 +13,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
 
-    @Autowired
-    private CommentRepository commentRepository;
 
-    @Autowired
-    private PostRepository postRepository;
+    private final CommentRepository commentRepository;
+
+    private final PostRepository postRepository;
 
     @Transactional
     public CommentResponseDto createComment(CommentCreateRequestDto dto) {
         Post post = postRepository.findById(dto.getPostId())
-                .orElseThrow(() -> new RuntimeException("게시물 을 찾을 수 없습니다. id: " + dto.getPostId()));
+                .orElseThrow(() -> new IllegalArgumentException("게시물 을 찾을 수 없습니다. id: " + dto.getPostId()));
+
 
         Comment comment = new Comment();
         comment.setText(dto.getText());
@@ -46,7 +47,7 @@ public class CommentService {
 
     public CommentResponseDto getCommentById(Long id) {
         Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Comment not found for id: " + id));
+                .orElseThrow(() -> new NoSuchElementException("댓글 id를 찾을 수 없습니다. id: " + id));
         return new CommentResponseDto(comment.getId(), comment.getText(), comment.getCreatedAt(), comment.getUpdatedAt());
     }
 
@@ -59,7 +60,7 @@ public class CommentService {
 
     public CommentResponseDto updateComment(Long id, CommentUpdateRequestDto dto) {
         Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));
+                .orElseThrow(() -> new NoSuchElementException("댓글 id를 찾을 수 없습니다. id: " + id));
         comment.setText(dto.getText());
         comment = commentRepository.save(comment);
         return new CommentResponseDto(comment.getId(), comment.getText(), comment.getCreatedAt(), comment.getUpdatedAt());
@@ -67,10 +68,7 @@ public class CommentService {
 
     public void deleteComment(Long id) {
         Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));
+                .orElseThrow(() -> new NoSuchElementException("댓글 id를 찾을 수 없습니다. id: " + id));
         commentRepository.delete(comment);
     }
-
-
-
 }

@@ -16,8 +16,8 @@ import java.util.List;
 @RequestMapping("/api/comments")
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
+
+    private final CommentService commentService;
 
     @PostMapping
     public ResponseEntity<CommentResponseDto> createComment(@RequestBody CommentCreateRequestDto dto) {
