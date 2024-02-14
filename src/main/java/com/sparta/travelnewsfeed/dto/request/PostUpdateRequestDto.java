@@ -10,4 +10,5 @@ public class PostUpdateRequestDto {
     private String title;
     private String content;
     private Category category;
+    private String password;
 }
