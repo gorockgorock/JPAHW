@@ -56,6 +56,7 @@ public class UserController {
 //            return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
 //        }
 //    }
+    @PatchMapping("/logout")
 
 }
 
