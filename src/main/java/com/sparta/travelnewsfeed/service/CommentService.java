@@ -7,8 +7,9 @@ import com.sparta.travelnewsfeed.entity.Comment;
 import com.sparta.travelnewsfeed.entity.Post;
 import com.sparta.travelnewsfeed.repository.CommentRepository;
 import com.sparta.travelnewsfeed.repository.PostRepository;
+import com.sparta.travelnewsfeed.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,55 +21,66 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CommentService {
 
-
     private final CommentRepository commentRepository;
 
     private final PostRepository postRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Transactional
-    public CommentResponseDto createComment(CommentCreateRequestDto dto) {
-        Post post = postRepository.findById(dto.getPostId())
-                .orElseThrow(() -> new IllegalArgumentException("게시물 을 찾을 수 없습니다. id: " + dto.getPostId()));
+    public CommentResponseDto createComment(Long postId, User user, CommentCreateRequestDto dto) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시물을 찾을 수 없습니다."));
+        Comment comment = new Comment(post, user, dto);
+        commentRepository.save(comment);
 
-
-        Comment comment = new Comment();
-        comment.setText(dto.getText());
-        comment.setPost(post);
-
-        Comment savedComment = commentRepository.save(comment);
-
-        return new CommentResponseDto(
-                savedComment.getId(),
-                savedComment.getText(),
-                savedComment.getCreatedAt(),
-                savedComment.getUpdatedAt()
-        );
+        return new CommentResponseDto(comment);
     }
+
 
     public CommentResponseDto getCommentById(Long id) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("댓글 id를 찾을 수 없습니다. id: " + id));
-        return new CommentResponseDto(comment.getId(), comment.getText(), comment.getCreatedAt(), comment.getUpdatedAt());
+        return new CommentResponseDto(comment.getId(), comment.getText(), comment.getCreatedAt(), comment.getUpdatedAt(), comment.getUser().getUsername());
     }
 
     public List<CommentResponseDto> findAllComments() {
         List<Comment> comments = commentRepository.findAllByOrderByCreatedAtDesc();
         return comments.stream()
-                .map(comment -> new CommentResponseDto(comment.getId(), comment.getText(), comment.getCreatedAt(), comment.getUpdatedAt()))
+                .map(comment -> new CommentResponseDto(comment.getId(), comment.getText(), comment.getCreatedAt(), comment.getUpdatedAt(), comment.getUser().getUsername()))
                 .collect(Collectors.toList());
     }
 
-    public CommentResponseDto updateComment(Long id, CommentUpdateRequestDto dto) {
+    @Transactional
+    public CommentResponseDto updateComment(User user, Long id, CommentUpdateRequestDto dto) {
+
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("잘못된 비밀번호");
+        }
+
         Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("댓글 id를 찾을 수 없습니다. id: " + id));
+                .orElseThrow(() -> new NoSuchElementException("id를 찾을 수 없습니다. id: " + id));
+
+        if (!comment.getUser().getId().equals(user.getId())) {
+            throw new SecurityException("자신의 댓글만 수정할 수 있습니다.");
+        }
+
         comment.setText(dto.getText());
-        comment = commentRepository.save(comment);
-        return new CommentResponseDto(comment.getId(), comment.getText(), comment.getCreatedAt(), comment.getUpdatedAt());
+        Comment updatedComment = commentRepository.save(comment);
+
+        return new CommentResponseDto(updatedComment.getId(), updatedComment.getText(),
+                updatedComment.getCreatedAt(), updatedComment.getUpdatedAt(), user.getUsername());
     }
 
-    public void deleteComment(Long id) {
+    @Transactional
+    public void deleteComment(User user, Long id) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("댓글 id를 찾을 수 없습니다. id: " + id));
-        commentRepository.delete(comment);
+
+        if (comment.getUser().getUsername().equals(user.getUsername())) {
+            commentRepository.delete(comment);
+        } else {
+            throw new SecurityException("자신의 댓글만 삭제할 수 있습니다.");
+        }
     }
 }

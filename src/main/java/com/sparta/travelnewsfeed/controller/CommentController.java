@@ -4,9 +4,10 @@ import com.sparta.travelnewsfeed.dto.request.CommentCreateRequestDto;
 import com.sparta.travelnewsfeed.dto.request.CommentUpdateRequestDto;
 import com.sparta.travelnewsfeed.dto.response.CommentResponseDto;
 import com.sparta.travelnewsfeed.service.CommentService;
+import com.sparta.travelnewsfeed.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,10 +20,9 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping
-    public ResponseEntity<CommentResponseDto> createComment(@RequestBody CommentCreateRequestDto dto) {
-        CommentResponseDto createdComment = commentService.createComment(dto);
-        return ResponseEntity.ok(createdComment);
+    @PostMapping("/{postId}")
+    public ResponseEntity<CommentResponseDto> createComment(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody CommentCreateRequestDto dto) {
+        return ResponseEntity.ok().body(commentService.createComment(postId, userDetails.getUser(), dto));
     }
 
     @GetMapping("/{id}")
@@ -38,17 +38,15 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommentResponseDto> updateComment(@PathVariable Long id, @RequestBody CommentUpdateRequestDto dto) {
-        CommentResponseDto updatedComment = commentService.updateComment(id, dto);
-        return ResponseEntity.ok(updatedComment);
+    public ResponseEntity<CommentResponseDto> updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                            @PathVariable Long id,
+                                                            @RequestBody CommentUpdateRequestDto dto) {
+        return ResponseEntity.ok().body(commentService.updateComment(userDetails.getUser(), id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
-        commentService.deleteComment(id);
+    public ResponseEntity<Void> deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+        commentService.deleteComment(userDetails.getUser(), id);
         return ResponseEntity.ok().build();
     }
-
-
-
 }
