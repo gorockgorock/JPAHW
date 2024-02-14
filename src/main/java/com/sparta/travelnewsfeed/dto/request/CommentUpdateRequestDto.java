@@ -9,4 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CommentUpdateRequestDto {
     private String text;
+    private String username;
+    private String password;
 }

@@ -9,6 +9,7 @@ import com.sparta.travelnewsfeed.repository.CommentRepository;
 import com.sparta.travelnewsfeed.repository.PostRepository;
 import com.sparta.travelnewsfeed.repository.UserRepository;
 import com.sparta.travelnewsfeed.user.User;
+import com.sparta.travelnewsfeed.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -73,11 +74,11 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentResponseDto updateComment(Long id, CommentUpdateRequestDto dto, String username, String rawPassword) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다.: " + username));
+    public CommentResponseDto updateComment(Long id, CommentUpdateRequestDto dto) {
+        User user = userRepository.findByUsername(dto.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다.: " + dto.getUsername()));
 
-        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호");
         }
 
@@ -85,7 +86,7 @@ public class CommentService {
                 .orElseThrow(() -> new NoSuchElementException("id를 찾을 수 없습니다. id: " + id));
 
         if (!comment.getUser().equals(user)) {
-            throw new SecurityException("자신의 댓글만 수정할 수 있습니다.");
+            throw new SecurityException("자신의 댓글만 수정할 수 있습니다.1");
         }
 
         comment.setText(dto.getText());
