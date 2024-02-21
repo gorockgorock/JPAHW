@@ -59,7 +59,6 @@ public class UserController {
     }
 
     @RequestMapping(value="/logout", method=RequestMethod.GET)
-
     public void deleteCookie(HttpServletResponse response){
             Cookie cookie = new Cookie("AUTHORIZATION_HEADER", null);
         cookie.setMaxAge(0);
