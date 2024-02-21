@@ -4,13 +4,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+
 @Getter
+@Setter
 @NoArgsConstructor
 public class UserRequestDto {
     @NotBlank
     @Pattern(regexp = "^[a-zA-z0-9]{4,10}", message = "4자 이상 10자 이하영어 대소문자나 숫자만 가능합니다")
     private String username;
-    @Email
+    @Email(message = "올바르지 않은 메일주소입니다")
     @NotBlank
     private String email;
     @Pattern(regexp = "^[0-9]{3,20}", message = "숫자만 입력해주세요")
