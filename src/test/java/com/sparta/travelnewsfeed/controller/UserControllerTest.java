@@ -7,7 +7,6 @@ import com.sparta.travelnewsfeed.dto.request.UserRequestDto;
 import com.sparta.travelnewsfeed.dto.response.UserResponseDto;
 import com.sparta.travelnewsfeed.mvc.MockSpringSecurityFilter;
 import com.sparta.travelnewsfeed.service.UserService;
-import com.sparta.travelnewsfeed.service.CommentService;
 import com.sparta.travelnewsfeed.user.User;
 import com.sparta.travelnewsfeed.user.UserDetailsImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,8 +25,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
