@@ -52,14 +52,14 @@ class PostServiceTest {
     @Test
     void updatePostTest() {
         // Given
-        User user = new User("test","test@test.com","1234567","0101234567"); // User 객체 초기화
+        User user = new User("test","test@test.com","1234567","0101234567");
         PostCreateRequestDto postCreateRequestDto = new PostCreateRequestDto("test","test", Category.AFTER);
 
         Long postId = 1L;
-        Post post = new Post(user,postCreateRequestDto); // Post 객체 초기화
+        Post post = new Post(user,postCreateRequestDto);
 
 
-        PostUpdateRequestDto postUpdateRequestDto = new PostUpdateRequestDto("test1","test1",Category.BEFORE_PLAN,"1234567"); // DTO 객체 초기화
+        PostUpdateRequestDto postUpdateRequestDto = new PostUpdateRequestDto("test1","test1",Category.BEFORE_PLAN,"1234567");
 
         given(postRepository.findById(postId)).willReturn(Optional.of(post));
         given(passwordEncoder.matches(postUpdateRequestDto.getPassword(), user.getPassword())).willReturn(true);

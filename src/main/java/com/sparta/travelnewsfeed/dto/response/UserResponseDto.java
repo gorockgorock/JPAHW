@@ -1,7 +1,9 @@
 package com.sparta.travelnewsfeed.dto.response;
 
 import com.sparta.travelnewsfeed.user.User;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class UserResponseDto extends CommonResponseDto{
     private Long id;
     private String username;
