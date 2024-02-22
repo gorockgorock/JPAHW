@@ -22,7 +22,6 @@ public class Comment {
 
     @Column(nullable = false)
     private String text;
-
     @ManyToOne(fetch = FetchType.LAZY)
     // 댓글과 게시물 간의 다대일 관계를 정의한다.
     @JoinColumn(name = "post_id", nullable = false)
@@ -32,6 +31,7 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
 
     @Column(name = "created_at", nullable = false, updatable = false)
     // 이 필드가 "created_at"에 맵핑되고, null이 불가능하며, 업데이트가 불가능하다.
