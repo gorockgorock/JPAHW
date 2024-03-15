@@ -3,6 +3,7 @@ package com.sparta.travelnewsfeed.repository;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.travelnewsfeed.entity.Post;
+import com.sparta.travelnewsfeed.entity.QPost;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

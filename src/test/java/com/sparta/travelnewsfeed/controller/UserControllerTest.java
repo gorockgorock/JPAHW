@@ -120,7 +120,6 @@ class UserControllerTest {
                         .content(jsonRequest))
                 .andExpect(status().isOk());
 
-
         verify(userService, times(1)).updateUser(any(User.class), any(UserRequestDto.class));
     }
 
