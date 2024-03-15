@@ -9,6 +9,9 @@ import com.sparta.travelnewsfeed.entity.Post;
 import com.sparta.travelnewsfeed.repository.PostRepository;
 import com.sparta.travelnewsfeed.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,6 +48,8 @@ public class PostService {
         return new PostReadResponseDto(post);
     }
 
+
+
     @Transactional
     public PostUpdateResponseDto update(User user, Long postId, PostUpdateRequestDto postUpdateRequestDto) throws NoSuchElementException{
         Post post = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("해당 글을 찾을 수 없습니다."));
@@ -66,5 +71,14 @@ public class PostService {
         }else{
             System.out.println(new AuthenticationException("권한이 없습니다."));
         }
+    }
+
+    public Page<PostReadResponseDto> searchByKeyword(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Post> postList = postRepository.searchByKeyword(keyword, pageable);
+        return postList.map(PostReadResponseDto::new);
+
+
+
     }
 }

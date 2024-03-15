@@ -7,6 +7,8 @@ import com.sparta.travelnewsfeed.entity.common.DateTime;
 import com.sparta.travelnewsfeed.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,6 +35,10 @@ public class Post extends DateTime {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
 
     public Post(User user, PostCreateRequestDto postCreateRequestDto){
         this.user = user;

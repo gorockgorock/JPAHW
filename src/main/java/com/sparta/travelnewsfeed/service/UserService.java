@@ -3,6 +3,7 @@ package com.sparta.travelnewsfeed.service;
 import com.sparta.travelnewsfeed.dto.request.SignupRequestDto;
 import com.sparta.travelnewsfeed.dto.request.UserRequestDto;
 import com.sparta.travelnewsfeed.dto.response.UserResponseDto;
+import com.sparta.travelnewsfeed.exception.ExistUserException;
 import com.sparta.travelnewsfeed.jwt.JwtUtil;
 import com.sparta.travelnewsfeed.repository.UserRepository;
 import com.sparta.travelnewsfeed.user.User;
@@ -28,7 +29,7 @@ public class UserService {
         String phone_number = signupRequestDto.getPhone_number();
 
         if (userRepository.findByUsername(username).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 유저이름입니다");
+            throw new ExistUserException();
         }
         User user = new User(username, email, password, phone_number);
         userRepository.save(user);

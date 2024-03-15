@@ -8,6 +8,7 @@ import com.sparta.travelnewsfeed.dto.response.PostUpdateResponseDto;
 import com.sparta.travelnewsfeed.service.PostService;
 import com.sparta.travelnewsfeed.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,15 @@ public class PostController {
     @GetMapping("/read/{postId}")
     public ResponseEntity<PostReadResponseDto> readDetail(@PathVariable Long postId){
         return ResponseEntity.ok().body(postService.readDetail(postId));
+    }
+
+    @GetMapping("/read/{keyword}")
+    public Page<PostReadResponseDto> searchByKeyword(
+        @RequestParam("page") int page,
+        @RequestParam("size") int size,
+        @PathVariable String keyword) {
+        return postService.searchByKeyword(keyword,
+            page-1, size);
     }
 
     @PutMapping("/{postId}")
